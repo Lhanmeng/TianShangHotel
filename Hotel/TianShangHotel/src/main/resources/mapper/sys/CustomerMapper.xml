@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianshang.sys.dao.CustomerDao">
+  
+     
+	<select id="findCustomersByName" resultType="com.tianshang.sys.entity.Customer">
+		select * from customer 
+		<where>
+			<if test="name!=null and name!=''">
+				name=#{name}  limit #{startIndex},#{pageSize}
+			</if>
+		</where>
+		 limit #{startIndex},#{pageSize}
+	</select>
+	
+	<select id="getRowCount" resultType="int">
+		select count(*) from customer 
+		  <where>
+           <if test="name!=null and name !=''">
+              name=#{name}
+           </if>
+         </where>
+	</select>
+	
+	<insert id="insertCustomer" 
+			parameterType="com.tianshang.sys.entity.Customer"
+			useGeneratedKeys="true"
+			keyProperty="id">
+       insert into customer
+       (cardid,name,tel,roomid,starttime,endtime)
+       values
+       (#{cardId},#{name},#{tel},#{roomId},#{startTime},#{endTime})
+   </insert>
+   
+   <update id="updateCustomer"  parameterType="com.tianshang.sys.entity.Customer">
+   		update customer 
+   		<set>
+   			<if test="cardId!=null and cardId!=''">
+   				cardid=#{cardId}
+   			</if>
+   			<if test="name!=null and name!=''">
+   				name=#{name}
+   			</if>
+   			<if test="tel!=null and tel!=''" >
+   				tel=#{tel}
+   			</if>
+   			<if test="roomId!=null and roomId!=''">
+   				roomid=#{roomId}
+   			</if>
+   			<if test="startTime!=null and startTime!=''">
+   				starttime=#{startTime}
+   			</if>
+   			<if test="endTime!=null and endTime!=''">
+   				endtime=#{endTime}
+   			</if>
+   			where id=#{id}
+   		</set>
+   
+   
+   </update>
+ 
+ <!-- 基于角色id获取角色自身信息 -->
+    <select id="findObjectById"
+            resultType="com.tianshang.sys.entity.Customer">
+            select *
+            from customer
+            where id=#{id}        
+    </select>
+   
+</mapper>
+
+
+

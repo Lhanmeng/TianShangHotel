@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianshang.sys.dao.RoomDao">
+  
+  
+  
+  <select id="findRoomObjects"
+             resultType="map">
+     
+          <!-- 方案2 -->
+          select c.*,(
+                    select p.name 
+                    from sys_menus p
+                    where c.parentId=p.id
+                    ) parentName
+          from room c
+         
+     </select>
+  
+  
+</mapper>
+
+
+
